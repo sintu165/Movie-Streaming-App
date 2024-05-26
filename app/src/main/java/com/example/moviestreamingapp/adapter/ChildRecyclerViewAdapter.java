@@ -1,6 +1,7 @@
 package com.example.moviestreamingapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviestreamingapp.MovieDetails;
 import com.example.moviestreamingapp.R;
 import com.example.moviestreamingapp.dataclasses.ChildRecyclerViewDataClass;
 
@@ -34,6 +36,17 @@ public class ChildRecyclerViewAdapter extends RecyclerView.Adapter<ChildRecycler
     @Override
     public void onBindViewHolder(@NonNull ChildRecyclerViewAdapter.ChildRecyclerViewHolder holder, int position) {
         Glide.with(context).load(categoryItemList.get(position).getImageUrl()).into(holder.childItemImageView);
+        holder.childItemImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, MovieDetails.class);
+                i.putExtra("movieId",categoryItemList.get(position).getId());
+                i.putExtra("movieName",categoryItemList.get(position).getMovieName());
+                i.putExtra("movieImageUrl",categoryItemList.get(position).getImageUrl());
+                i.putExtra("movieFile",categoryItemList.get(position).getFileUrl());
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
